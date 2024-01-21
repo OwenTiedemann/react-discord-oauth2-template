@@ -7,7 +7,7 @@ export const Home : React.FC = ({}) => {
 
   const { token, loginInProgress, logOut } = useContext(AuthContext)
 
-  const { userId } = useContext(UserContext)
+  const { userId, logoutUser } = useContext(UserContext)
 
   if (loginInProgress) {
     return null
@@ -19,11 +19,16 @@ export const Home : React.FC = ({}) => {
     )
   }
 
+  const logoutFunction = () => {
+    logOut()
+    logoutUser()
+  }
+
   return (
     <div>
       <>{userId}</>
       <br/>
-      <button onClick={() => {logOut()}}>Log Out</button>
+      <button onClick={logoutFunction}>Log Out</button>
     </div>
   );
 }

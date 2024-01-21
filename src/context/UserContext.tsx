@@ -2,19 +2,38 @@ import { PropsWithChildren, createContext, useContext, useEffect, useState } fro
 import { AuthContext } from "react-oauth2-code-pkce";
 
 type TUserContext = {
-    userId: string | undefined
+    userId: string | undefined,
+    logoutUser: () => void
 }
 
 export const UserContext = createContext<TUserContext>({
-    userId: undefined
+    userId: undefined,
+    logoutUser: () => {}
 })
 
 export const UserContextProvider : React.FC<PropsWithChildren> = ({children}) => {
-    const [userId, setUserId] = useState<string | undefined>(undefined);
+    const [userId, setUserIdState] = useState<string | undefined>(undefined);
 
     const { token } = useContext(AuthContext);
 
+    const setUserId = (id : any) => {
+        setUserIdState(id)
+        localStorage.setItem('user.id', id)
+    }
+
+    const logoutUser = () => {
+        setUserId(undefined)
+        localStorage.removeItem('user.id')
+    }
+
     useEffect(() => {
+
+        const localUserId = localStorage.getItem('user.id')
+
+        if (localUserId && token) {
+            setUserIdState(localUserId)
+            return
+        }
 
         if (token) {
             fetch('https://discord.com/api/users/@me', {
@@ -33,7 +52,7 @@ export const UserContextProvider : React.FC<PropsWithChildren> = ({children}) =>
     }, [token])
 
     return (
-        <UserContext.Provider value={{ userId: userId }}>
+        <UserContext.Provider value={{ userId: userId, logoutUser: logoutUser }}>
             {children}
         </UserContext.Provider>
     )
