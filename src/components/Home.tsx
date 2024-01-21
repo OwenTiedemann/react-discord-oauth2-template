@@ -3,7 +3,7 @@ import { AuthContext } from "react-oauth2-code-pkce"
 import { Navigate } from "react-router-dom"
 import { UserContext } from "../context/UserContext";
 
-export const Home : React.FC = ({}) => {
+export const Home : React.FC = () => {
 
   const { token, loginInProgress, logOut } = useContext(AuthContext)
 

@@ -13,7 +13,7 @@ const routes = createBrowserRouter([
     }
 ])
 
-export const AppRouter = ({}) => {
+export const AppRouter = () => {
     return (
         <RouterProvider router={routes}/>
     )

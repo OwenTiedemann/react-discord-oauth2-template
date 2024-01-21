@@ -3,7 +3,7 @@ import { AuthContext } from "react-oauth2-code-pkce"
 
 
 
-export const Login : React.FC = ({}) => {
+export const Login : React.FC = () => {
 
     const { login } = useContext(AuthContext)
 

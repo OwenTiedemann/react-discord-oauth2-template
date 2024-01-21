@@ -16,13 +16,13 @@ export const UserContextProvider : React.FC<PropsWithChildren> = ({children}) =>
 
     const { token } = useContext(AuthContext);
 
-    const setUserId = (id : any) => {
+    const setUserId = (id : string ) => {
         setUserIdState(id)
         localStorage.setItem('user.id', id)
     }
 
     const logoutUser = () => {
-        setUserId(undefined)
+        setUserIdState(undefined)
         localStorage.removeItem('user.id')
     }
 
